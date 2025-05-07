@@ -2,32 +2,27 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toko Script Ghanz</title>
+  <title>Produk Toko Ghanz</title>
   <style>
     body {
-      background: #f0f8ff;
+      background: #f1f8e9;
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
-    }
-    h1 {
-      color: #333;
     }
     .produk {
       background: #fff;
       padding: 20px;
       margin: 20px auto;
-      border-radius: 15px;
+      border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       max-width: 400px;
     }
     .produk h2 {
-      color: #0074ff;
-      margin-bottom: 10px;
+      color: #33691e;
     }
     .button {
-      background: linear-gradient(to right, #00c6ff, #0074ff);
+      background: linear-gradient(to right, #66bb6a, #43a047);
       color: #fff;
       padding: 12px 20px;
       border-radius: 8px;
@@ -42,6 +37,14 @@
   </style>
 </head>
 <body>
+
+  <script>
+    const user = localStorage.getItem("currentUser");
+    if (!user) {
+      alert("Kamu harus login dulu.");
+      window.location.href = "index.html";
+    }
+  </script>
 
   <h1>Produk Bot Ghanz</h1>
 
