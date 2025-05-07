@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Ghanz</title>
+  <style>
+    body {
+      background: #f8faff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 450px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #0074ff;
+    }
+    #produk-dibeli {
+      font-size: 20px;
+      color: #00c6ff;
+      margin: 20px 0;
+    }
+    .button {
+      background: #0074ff;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .button:hover {
+      background: #005ecb;
+    }
+    .sub-button {
+      background: #00bcd4;
+      margin-top: 10px;
+      display: none;
+    }
+    .sub-button:hover {
+      background: #0097a7;
+    }
+    #nomor-dana {
+      display: none;
+      background: #e3f2fd;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      color: #0d47a1;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<marquee behavior="scroll" direction="left" style="color:#0074ff; font-size: 20px; margin-bottom: 20px;">
+  Berikan SS bukti kepada Ghanz di nomor di bawah ini
+</marquee>
+
+<div class="container">
+  <h1>Pembayaran Produk</h1>
+  <div id="produk-dibeli">Produk: -</div>
+
+  <button class="button" onclick="toggleHub()">Mau QRIS? Hubungi WA / Telegram</button>
+  <button id="btn-wa" class="button sub-button" onclick="window.location.href='https://wa.me/089672380803'">WhatsApp</button>
+  <button id="btn-tg" class="button sub-button" onclick="window.location.href='https://t.me/Ghanz626'">Telegram</button>
+
+  <button class="button" onclick="showDana()">Lihat Nomor DANA</button>
+  <div id="nomor-dana">089672380803</div>
+
+  <a class="button" style="background:#28a745;" href="https://whatsapp.com/channel/0029Vb2UlO2Jf05W2AL1cz1W" target="_blank">Lihat Testimoni</a>
+</div>
+
+<script>
+  function toggleHub() {
+    const waBtn = document.getElementById('btn-wa');
+    const tgBtn = document.getElementById('btn-tg');
+    waBtn.style.display = waBtn.style.display === 'block' ? 'none' : 'block';
+    tgBtn.style.display = tgBtn.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function showDana() {
+    const dana = document.getElementById('nomor-dana');
+    dana.style.display = dana.style.display === 'block' ? 'none' : 'block';
+  }
+
+  const produkList = {
+    "tradict": { nama: "Script Bot Bug Tradict", harga: "Rp100.000" },
+    "storm": { nama: "Script Bot Bug Storm", harga: "Rp40.000" },
+    "admin-panel": { nama: "Admin Panel", harga: "Rp10.000" },
+    "reseller-panel": { nama: "Reseller Panel", harga: "Rp7.000" },
+    "panel-unli": { nama: "Panel Unli", harga: "Rp9.000" },
+    "jasbug-android": { nama: "Jasbug (Android)", harga: "Rp2.000" },
+    "jasbug-iphone": { nama: "Jasbug (iPhone)", harga: "Rp3.000" },
+    "apk-qris-noktp": { nama: "APK QRIS Tanpa KTP", harga: "Rp3.000" }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const kodeProduk = params.get("produk");
+  const produk = produkList[kodeProduk];
+
+  const target = document.getElementById("produk-dibeli");
+  if (produk) {
+    target.textContent = `Produk: ${produk.nama} - ${produk.harga}`;
+  } else {
+    target.textContent = "Produk tidak ditemukan.";
+  }
+</script>
+</body>
+</html>
