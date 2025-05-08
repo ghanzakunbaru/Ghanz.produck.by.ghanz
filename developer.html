@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Halaman Developer</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      text-align: center;
-      background: #f4f6f9;
-    }
-    h1 {
-      color: #333;
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      background: #ff3b3b;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #ff1a1a;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .developer-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <h1>Halaman Developer</h1>
-  <p>Ini adalah halaman untuk developer. Anda dapat menghapus semua data dari sistem.</p>
-
-  <button onclick="hapusData()">Hapus Semua Data</button>
-
-  <script>
-    const currentUser = localStorage.getItem("currentUser");
-
-    if (currentUser !== "Ghanz") {
-      alert("Akses ditolak. Hanya developer yang dapat mengakses halaman ini.");
-      window.location.href = "login.html";
-    }
-
-    function hapusData() {
-      if (confirm("Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.")) {
-        localStorage.clear();
-        alert("Semua data berhasil dihapus.");
-        window.location.href = "login.html";
-      }
-    }
-  </script>
+    <div class="developer-container">
+        <h2>Developer Page</h2>
+        <p>Welcome to the developer page. Here you can access tools and information related to the project.</p>
+    </div>
 </body>
-</html>
+      </html>
