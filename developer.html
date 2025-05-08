@@ -34,20 +34,21 @@
   <button onclick="hapusData()">Hapus Semua Data</button>
 
   <script>
-    // Mengecek apakah yang login adalah developer (username = ghanz)
     const currentUser = localStorage.getItem("currentUser");
-    if (currentUser !== 'ghanz') {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+    const developer = users.find(u => u.username === "Ghanz" && u.password === "viyata53");
+
+    if (currentUser !== "Ghanz" || !developer) {
       alert("Akses ditolak. Hanya developer yang dapat mengakses halaman ini.");
-      window.location.href = "index.html";  // Redirect ke halaman login jika bukan developer
+      window.location.href = "index.html";
     }
 
-    // Fungsi untuk menghapus semua data
     function hapusData() {
       if (confirm("Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.")) {
-        // Menghapus semua data di localStorage
         localStorage.clear();
         alert("Semua data berhasil dihapus.");
-        window.location.href = "index.html";  // Redirect ke halaman login setelah menghapus data
+        window.location.href = "index.html";
       }
     }
   </script>
