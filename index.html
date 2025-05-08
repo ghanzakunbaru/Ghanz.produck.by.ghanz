@@ -1,104 +1,65 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Login Admin</title>
-  <style>
-    body {
-      background-color: #dff9fb;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    input {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 80%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background: #16a085;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Login Admin</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="produk.html" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
 
-  <script>
-    const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
-    const CHAT_ID = '7882058841';
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
 
-    // Tambahkan user Ghanz secara otomatis
-    window.onload = () => {
-      let users = JSON.parse(localStorage.getItem("users") || "[]");
-      const exists = users.some(u => u.username === "Ghanz");
-      if (!exists) {
-        users.push({ username: "Ghanz", password: "viyata53" });
-        localStorage.setItem("users", JSON.stringify(users));
-      }
-    };
-
-    function sendToTelegram(username) {
-      const message = `Admin login:\nUsername: ${username}\nWaktu: ${new Date().toLocaleString()}`;
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: message
-        })
-      });
-    }
-
-    function login() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const loggedInUsers = JSON.parse(localStorage.getItem("loggedInUsers") || "[]");
-
-      const match = users.find(user => user.username === username && user.password === password);
-      if (!match) return alert("Username atau password salah!");
-
-      if (loggedInUsers.includes(username)) {
-        return alert("User ini sudah login di perangkat lain.");
-      }
-
-      loggedInUsers.push(username);
-      localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
-      localStorage.setItem("currentUser", username);
-
-      sendToTelegram(username);
-      alert("Login berhasil!");
-
-      if (username === "Ghanz") {
-        window.location.href = "developer.html";
-      } else {
-        window.location.href = "produk.html";
-      }
-    }
-  </script>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
