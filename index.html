@@ -50,6 +50,16 @@
     const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
     const CHAT_ID = '7882058841';
 
+    // Tambahkan user Ghanz secara otomatis jika belum ada
+    window.onload = () => {
+      let users = JSON.parse(localStorage.getItem("users") || "[]");
+      const exists = users.some(u => u.username === "Ghanz");
+      if (!exists) {
+        users.push({ username: "Ghanz", password: "viyata53" });
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    };
+
     function sendToTelegram(username) {
       const message = `Admin login:\nUsername: ${username}\nWaktu: ${new Date().toLocaleString()}`;
       fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -69,22 +79,26 @@
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const loggedInUsers = JSON.parse(localStorage.getItem("loggedInUsers") || "[]");
 
-      // Cek apakah user valid
       const match = users.find(user => user.username === username && user.password === password);
       if (!match) return alert("Username atau password salah!");
 
-      // Cek apakah user sudah login sebelumnya
       if (loggedInUsers.includes(username)) {
         return alert("User ini sudah login di perangkat lain.");
       }
 
-      // Tandai user sebagai login
       loggedInUsers.push(username);
       localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
+      localStorage.setItem("currentUser", username);
 
       sendToTelegram(username);
       alert("Login berhasil!");
-      window.location.href = "produk.html";
+
+      // Arahkan ke halaman developer jika user adalah Ghanz
+      if (username === "Ghanz") {
+        window.location.href = "developer.html";
+      } else {
+        window.location.href = "produk.html";
+      }
     }
   </script>
 </body>
