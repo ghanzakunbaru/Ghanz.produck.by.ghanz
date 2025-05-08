@@ -35,20 +35,17 @@
 
   <script>
     const currentUser = localStorage.getItem("currentUser");
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    const developer = users.find(u => u.username === "Ghanz" && u.password === "viyata53");
-
-    if (currentUser !== "Ghanz" || !developer) {
+    if (currentUser !== "Ghanz") {
       alert("Akses ditolak. Hanya developer yang dapat mengakses halaman ini.");
-      window.location.href = "index.html";
+      window.location.href = "login.html";
     }
 
     function hapusData() {
       if (confirm("Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.")) {
         localStorage.clear();
         alert("Semua data berhasil dihapus.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       }
     }
   </script>
