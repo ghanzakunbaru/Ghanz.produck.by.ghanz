@@ -36,7 +36,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    p a { text-decoration: none; color: #2980b9; }
   </style>
 </head>
 <body>
@@ -45,18 +44,45 @@
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button onclick="login()">Login</button>
-    <p>blm punya akun? <a href="register.html">Login</a></p>
+  </div>
 
   <script>
+    const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
+    const CHAT_ID = '7882058841';
+
+    function sendToTelegram(username) {
+      const message = `Admin login:\nUsername: ${username}\nWaktu: ${new Date().toLocaleString()}`;
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message
+        })
+      });
+    }
+
     function login() {
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
       const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const match = users.find(user => user.username === username && user.password === password);
+      const loggedInUsers = JSON.parse(localStorage.getItem("loggedInUsers") || "[]");
 
+      // Cek apakah user valid
+      const match = users.find(user => user.username === username && user.password === password);
       if (!match) return alert("Username atau password salah!");
 
+      // Cek apakah user sudah login sebelumnya
+      if (loggedInUsers.includes(username)) {
+        return alert("User ini sudah login di perangkat lain.");
+      }
+
+      // Tandai user sebagai login
+      loggedInUsers.push(username);
+      localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
+
+      sendToTelegram(username);
       alert("Login berhasil!");
       window.location.href = "produk.html";
     }
