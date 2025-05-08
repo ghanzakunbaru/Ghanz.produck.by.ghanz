@@ -1,95 +1,65 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Register Akun</title>
-  <style>
-    body {
-      background-color: #f1f2f6;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .register-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 300px;
-    }
-    input {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 90%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background: #0984e3;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    p a {
-      text-decoration: none;
-      color: #636e72;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-  <div class="register-box">
-    <h2>Register Akun</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="register()">Daftar</button>
-    <p>Sudah punya akun? <a href="index.html">Login</a></p>
-  </div>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="index.html" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
 
-  <script>
-    const BOT_TOKEN = '7621390139:AAE9oNVeBy946yGbO7IDsT34DFY3THvGC6I';
-    const CHAT_ID = '7882058841';
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
 
-    function sendToTelegram(username) {
-      const message = `Akun baru terdaftar:\nUsername: ${username}\nWaktu: ${new Date().toLocaleString()}`;
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: message
-        })
-      });
-    }
-
-    function register() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-
-      if (!username || !password) {
-        alert("Semua kolom harus diisi!");
-        return;
-      }
-
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-
-      if (users.find(u => u.username === username)) {
-        alert("Username sudah digunakan!");
-        return;
-      }
-
-      users.push({ username, password });
-      localStorage.setItem("users", JSON.stringify(users));
-
-      sendToTelegram(username);
-      alert("Registrasi berhasil! Silakan login.");
-      window.location.href = "index.html";
-    }
-  </script>
+            <button type="submit">Register</button>
+        </form>
+    </div>
 </body>
 </html>
